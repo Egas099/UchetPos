@@ -24,12 +24,15 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #000000;
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  background: rgb(196, 196, 196);
+
 }
 .content{
-  flex: 0 0 auto;
+  display: block;
+  min-height: calc(100vh - 10vh - 5vh);
 }
 </style>

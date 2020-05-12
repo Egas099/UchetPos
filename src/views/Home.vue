@@ -1,13 +1,11 @@
 <template>
   <div class="home content">
-    <form action="">
-      <div class="view_attendance">
-        <router-link to="/">Отметить посещаемость</router-link>
-      </div>
-      <div class="view_attendance">
-        <router-link to="/view_attendance">Просмотр посещаемости</router-link>
-      </div>
-    </form>
+    <div class="view_attendance">
+      <router-link to="/selectionnew">Отметить посещаемость</router-link>
+    </div>
+    <div class="view_attendance">
+      <router-link to="/selectioncheck">Просмотр посещаемости</router-link>
+    </div>
   </div>
 </template>
 
@@ -26,8 +24,9 @@ export default {
   text-decoration: none;
   color: black;
   border: 5px rgb(0, 145, 145) solid;
-  margin: 3em auto;
+  margin: 20vh auto;
   width: 30%;
-  padding: 1em 0;
+  min-width: 200px;
+  padding: 3vh 0;
 }
 </style>

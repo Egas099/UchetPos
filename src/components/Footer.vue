@@ -14,11 +14,14 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 footer{
-  padding: 1em 0;
-  background-color: rgb(145, 145, 145);
-  color: rgba(255, 255, 255, 0.788);
+  height: 5vh;
+  min-height: 30px;
+  background-color: rgb(150, 150, 150);
+  color: rgba(255, 255, 255, 0.781);
+}
+.copyright{
+  margin: 1vh;
 }
 </style>

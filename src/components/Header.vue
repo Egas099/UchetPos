@@ -8,12 +8,11 @@
         </ul>
     </nav> -->
     <div class="auth_name">
-      <span>
-        Иванов Иван Иванович
-      </span>
+      <input type="button" value="Иванов Иван Иванович">
     </div>
     <div class="exit">
       <input type="button" value="Выход">
+      <div style="clear: both;"></div>
     </div>
     <!-- <div class="auth">
       <span>
@@ -33,52 +32,29 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-// ul {
-//   list-style-type: none;
-//   margin: 0;
-// }
-// li {
-//   background-color: rgb(248, 248, 248);
-//   display: inline-flex;
-//   margin: 1px;
-// }
-// a {
-//   font-size: 130%;
-//   display: block;
-//   text-decoration: none;
-//   color: #359167;
-//   width: 10em;
-//   padding: 0.5em 0;
-// }
 header{
-  // border: 1px black solid;
-  // display: inline-flex;
   background: rgba(0, 150, 150);
-  margin: 0 0 3em 0;
+  margin: 0 0 1vh 0;
+  height: 9vh;
+  min-height: 30px;
 }
-// li:hover{
-//   background-color: rgb(223, 223, 223);
-// }
-
-.auth_name{
-  float: left;
-  padding: 1em;
-  color: black;
-}
-.auth_name > span{
-  font-size: 150%;
-}
-.exit > *{
+input{
   font-size: 120%;
-  float: right;
   color: black;
-  padding: 1em;
+  height: 9vh;
   border: none;
   background: rgba(0, 150, 150);
+  min-height: 30px;
+}
+.auth_name{
+  float: left;
+}
+.exit > *{
+  float: right;
 }
 .auth{
   color: black;
-  padding: 1em;
+  padding: 1vh;
   font: 140% sans-serif;
 }
 </style>
