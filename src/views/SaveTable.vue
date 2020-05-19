@@ -2,16 +2,23 @@
   <div class="save_table content">
     <div class="head">
       <div class="left">
-        Предмет
+        {{this.$store.state.n.selectSubject}}
       </div>
       <div class="left">
-        Дата
+        {{this.$store.state.n.selectDate}}
       </div>
       <div class="left">
         Группы:
+        <transition-group name="list" tag="span">
+            <span
+            v-for="item in this.$store.state.n.groups"
+            v-bind:key="item.title" class="list-item">
+            {{item.title}}
+            </span>
+          </transition-group>
       </div>
       <div>
-        <router-link to="/" id="exit_home">Сохранить</router-link>
+        <router-link to="/" id="exit_home" class="green_button">Сохранить</router-link>
       </div>
     </div>
     <div style="clear: both;"></div>
@@ -27,7 +34,7 @@
           <tr v-for="item in students" v-bind:key="item.id">
             <td class="grey">{{item.student[0]}}</td>
             <td>+</td>
-            <td class="grey f">
+            <td class="grey full">
               <input type="text" class="zam">
             </td>
           </tr>
@@ -118,10 +125,8 @@ table{
   overflow: auto;
   height: 77vh;
 }
-.f{
+.full{
   width: 100%;
-  margin: 0;
-  padding: 0 0;
 }
 .fix_y{
   position: sticky;
@@ -137,16 +142,13 @@ table{
 #exit_home{
   font-size: 120%;
   float: right;
-  color: black;
   padding: 1vh;
   margin: 1vh auto;
-  border: none;
-  background: rgba(0, 150, 150);
   text-decoration: none;
 }
 .left{
   font-size: 120%;
-  padding: 1vh 2vw;
+  padding: 2vh 2vw;
   float: left;
 }
 .head{
@@ -156,8 +158,23 @@ table{
 .zam{
   border: none;
   min-height: 20px;
-  width: 95%;
+  width: 99%;
   background: rgb(196, 196, 196);
-
+}
+.list-item {
+  background-color: rgb(196, 196, 196);
+  display: inline-block;
+  padding: 0 0.5vw;
+  margin: 0 1px;
+}
+.green_button{
+  background-color: rgba(0, 150, 150);
+  &:hover {
+  background-color: rgb(0, 170, 170);
+  transition: 0.3s;
+  }
+  text-decoration: none;
+  border: none;
+  color: black;
 }
 </style>

@@ -15,11 +15,6 @@ const routes = [
     component: () => import('../views/CheckTable.vue'),
   },
   {
-    path: '/authorization',
-    name: 'Authorization',
-    component: () => import('../views/Authorization.vue'),
-  },
-  {
     path: '/selectioncheck',
     name: 'ChoiceForCheck',
     component: () => import('../views/ChoiceForCheck.vue'),
@@ -31,7 +26,7 @@ const routes = [
   },
   {
     path: '/save_attendance',
-    name: 'CheckTable',
+    name: 'SaveTable',
     component: () => import('../views/SaveTable.vue'),
   },
 ];

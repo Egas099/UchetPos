@@ -2,13 +2,13 @@
   <div class="check_table content">
     <div class="head">
       <div class="left">
-        Предмет
+        {{this.$store.state.c.selectSubject}}
       </div>
       <div class="left">
-        Группа
+        {{this.$store.state.c.selectGroup}}
       </div>
       <div>
-        <router-link to="/" id="exit_home">Главная</router-link>
+        <router-link to="/" id="exit_home" class="green_button">Главная</router-link>
       </div>
     </div>
     <div style="clear: both;"></div>
@@ -132,20 +132,22 @@ table{
 #exit_home{
   font-size: 120%;
   float: right;
-  color: black;
   padding: 1vh;
   margin: 1vh auto;
-  border: none;
-  background: rgba(0, 150, 150);
-  text-decoration: none;
 }
 .left{
   font-size: 120%;
-  padding: 1vh 2vw;
+  padding: 2vh 2vw;
   float: left;
 }
-.head{
-  min-height: 7vh;
+.green_button{
+  background-color: rgba(0, 150, 150);
+  &:hover {
+  background-color: rgb(0, 170, 170);
+  transition: 0.3s;
+  }
+  text-decoration: none;
+  border: none;
   color: black;
 }
 </style>

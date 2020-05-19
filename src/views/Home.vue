@@ -6,10 +6,12 @@
     <div class="view_attendance">
       <router-link to="/selectioncheck">Просмотр посещаемости</router-link>
     </div>
+    <div class="">{{this.$store.state.a.counter}}</div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'Home',
   components: {

@@ -1,24 +1,18 @@
 <template>
   <header>
-    <!-- <nav>
-        <ul>
-            <li><router-link to="/">Главная</router-link></li>
-            <li><router-link to="/authorization">Авторизация</router-link></li>
-            <li><router-link to="/view_attendance">Посещаемость</router-link></li>
-        </ul>
-    </nav> -->
-    <div class="auth_name">
-      <input type="button" value="Иванов Иван Иванович">
-    </div>
-    <div class="exit">
-      <input type="button" value="Выход">
+    <div class="" v-if="this.$store.state.a.autoriz">
+      <div class="auth_name">
+        <input type="button" value="Иванов Иван Иванович" class="green_button">
+      </div>
+      <div class="exit">
+        <input type="button" value="Выход" class="green_button"
+        @click="Deauthorization">
+      </div>
       <div style="clear: both;"></div>
     </div>
-    <!-- <div class="auth">
-      <span>
-        Авторизация
-      </span>
-    </div> -->
+    <div class="auth" v-else>
+      <span></span>
+    </div>
   </header>
 </template>
 
@@ -26,6 +20,11 @@
 export default {
   name: 'Header',
   props: {
+  },
+  methods: {
+    Deauthorization() {
+      this.$store.commit('deautorization');
+    },
   },
 };
 </script>
@@ -40,21 +39,25 @@ header{
 }
 input{
   font-size: 120%;
-  color: black;
   height: 9vh;
-  border: none;
-  background: rgba(0, 150, 150);
   min-height: 30px;
 }
 .auth_name{
   float: left;
+  padding: 0 1vh;
 }
-.exit > *{
+.exit{
   float: right;
+  padding: 0 1vh;
 }
 .auth{
+  margin: auto;
   color: black;
-  padding: 1vh;
   font: 140% sans-serif;
+}
+span::after{
+  display: block;
+  margin: 2vh auto;
+  content: 'Авторизация';
 }
 </style>
