@@ -1,35 +1,41 @@
 <template>
-  <div class="check_table content">
-    <div class="head">
-      <div class="left">
-        {{this.$store.state.c.selectSubject}}
+  <div class="content">
+    <div class="content_wrapper">
+      <div class="head">
+        <p class="">
+          {{this.$store.state.c.selectSubject}}
+        </p>
+        <p class="">
+          {{this.$store.state.c.selectGroup}}
+        </p>
+        <div>
+          <router-link to="/" id="exit_home" class="green_button">Главная</router-link>
+        </div>
       </div>
-      <div class="left">
-        {{this.$store.state.c.selectGroup}}
-      </div>
-      <div>
-        <router-link to="/" id="exit_home" class="green_button">Главная</router-link>
+      <div style="clear: both;"></div>
+      <div class="table_wrapper">
+        <table id="main_table">
+            <thead>
+              <tr>
+                <td class="fio fix_x fix_y">ФИО</td>
+                <td v-for="item in loc_visit" v-bind:key="item.data" class="fix_y">
+                  {{item.lesson.data}}
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="stud in loc_stud" v-bind:key="stud.id">
+                <td class="name fix_x">
+                {{edit_name(stud.name)}}
+                </td>
+                <td v-for="item in loc_visit" v-bind:key="item.data"
+                  :class="find_pos(stud.id,item.lesson.visit) ? 'b_green' : 'b_red'">
+                </td>
+              </tr>
+            </tbody>
+        </table>
       </div>
     </div>
-    <div style="clear: both;"></div>
-    <table>
-        <thead>
-          <tr>
-            <td class="fio fix_x fix_y">ФИО</td>
-            <td v-for="item in data" v-bind:key="item.id" class="fix_y">
-              {{item}}
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in students" v-bind:key="item.id">
-            <td class="name fix_x">{{item.student[0]}}</td>
-            <td v-for="item in data" v-bind:key="item.id" class="over">
-              +
-            </td>
-          </tr>
-        </tbody>
-    </table>
   </div>
 </template>
 
@@ -37,82 +43,68 @@
 export default {
   data() {
     return {
-      title: ['ФИО', 'Группа'],
-      students: [
-        { student: ['Студентик'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студеняка'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студентищеееееееееее еееееееееееееееееееееееее'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студенёк'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студентъ'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студень'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-      ],
-      data: ['20.03.2020',
-        '25.03.20',
-        '31.03.20',
-        '10.04.20',
-        '16.04.20',
-        '22.04.20',
-        '12.05.20',
-        '21.05.20',
-        '01.06.20',
-        '23.06.20',
-        '23.06.20',
-        '23.06.20',
-        '23.06.20',
-        '23.06.20',
-        '23.06.20',
-        '23.06.20',
-      ],
+      loc_visit: this.$store.state.c.visits,
+      loc_stud: this.$store.state.c.students,
     };
+  },
+  methods: {
+    edit_name(name) {
+      return name.split(' ', 2).join(' ');
+    },
+    find_pos(id, visit) {
+      let pos = false;
+      try {
+        visit.forEach((element) => {
+          if ((element.stud_id === id) && (element.visit === 'yes')) {
+            pos = true;
+          }
+        });
+      } catch {
+        pos = false;
+      }
+      return pos;
+    },
+    view() {
+    },
   },
 };
 </script>
 
 <style lang="scss">
+.table_wrapper{
+  display: inline-block;
+  margin: 0 auto;
+}
 td.fio{
-  z-index:9999;
+  z-index: 9999;
   text-align: center;
   background: rgba(0, 150, 150);
 }
 td.name{
   background: rgb(196, 196, 196);
+  min-width: 16vw;
+  text-align: left;
 }
 thead td{
   background: rgba(0, 150, 150);
 }
-tbody td{
-  background: rgba(0, 255, 0, 0.7);
+.b_green{
+  background: rgba(0, 168, 0, 0.5);
+}
+.b_red{
+  background: rgba(255, 0, 0, 0.5);
 }
 td{
   padding: 5px;
   border: 1px solid rgb(0, 0, 0);
 }
-table{
+#main_table{
   display: block;
-  color: black;
   border-collapse: collapse;
-  margin: 0 auto 0 auto;
+  margin: 0 auto;
   overflow: auto;
-  height: 75vh;
+  max-height: 75vh;
+  max-width: 94vw;
 }
 .fix_y{
   position: sticky;
@@ -122,11 +114,12 @@ table{
   position: sticky;
   left: 0;
 }
-.check_table{
-  width: 90%;
+.content_wrapper{
+  display: inline-block;
+  max-width: 95%;
   margin: 0 auto;
   background-color: rgba(128, 128, 128, 0.637);
-  padding: 1% 1%;
+  padding: 0 1vw 1vh 1vw;
   border: 5px rgb(0, 145, 145) solid;
 }
 #exit_home{
@@ -140,14 +133,11 @@ table{
   padding: 2vh 2vw;
   float: left;
 }
-.green_button{
-  background-color: rgba(0, 150, 150);
-  &:hover {
-  background-color: rgb(0, 170, 170);
-  transition: 0.3s;
-  }
-  text-decoration: none;
-  border: none;
-  color: black;
+.head > p{
+  font-size: 120%;
+  padding: 0 1vh;
+  display: block;
+  text-align: left;
+  float: left;
 }
 </style>

@@ -12,26 +12,25 @@
 
         <input class="inp" type="text" placeholder="Введите номер группы" required
         v-model="selGroup" v-on:keyup="() => {this.$store.commit('change_Group',selGroup)}">
-        <router-link to="/view_attendance" class="green_button">
-          Просмотр посещаемости
-        </router-link>
         <button type="submit"  class="green_button">
-          Импорт
+          Просмотр посещаемости
         </button>
       </fieldset>
     </form>
     <div class="loading" v-if="load">
-      <div class="load_data">Загружаем данные</div>
+      <div class="load_data" >Загружаем данные...</div>
       <div class="load_error">
-        <div class="load_data" v-show="load_error">
+        <div class="load_data" v-show="load_error || load_text">
           <div>
-            Произошла ошибка при загрузке данных:<br>{{load_error}}<br>
+            {{load_text}}<br>{{load_error}}<br>
           </div>
         <button @click="() => {
           this.load = false;
           this.load_error = '';
+          this.load_text = '';
           }"
-          class="green_button">Продолжить</button>
+          class="green_button">Продолжить
+        </button>
         </div>
       </div>
     </div>
@@ -44,32 +43,34 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      selSubject: this.$store.state.c.selectSubject,
       selGroup: this.$store.state.c.selectGroup,
+      selSubject: this.$store.state.c.selectSubject,
       load: false,
       load_error: '',
+      load_text: '',
     };
   },
+  computed: {
+    visitRequest() {
+      return `http://kappa.cs.petrsu.ru/~pogudin/tppo/web/predmet/visits/${this.selGroup}/${this.selSubject}`;
+    },
+  },
   methods: {
-    none() {
-      axios.get('http://kappa.cs.petrsu.ru/~pogudin/tppo/web')
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => console.log(error));
-    },
-    q() {
-      console.log('fdgg');
-    },
     view_attendance() {
       this.load = true;
-      console.log('Импортируем визиты');
-      axios.get('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/predmet/visits/')
+      this.$store.dispatch('students_request');
+      axios.get(this.visitRequest)
         .then((response) => {
-          console.log(response.data);
-          this.load = false;
+          if (response.data.length === 0) {
+            this.load_text = 'По вашему запросу ничего не найдено';
+          } else if (response.data.length !== 0) {
+            this.load_text = 'Запрос выполнен';
+            this.$store.commit('import_visits', response.data);
+            this.$router.push('/view_attendance');
+          }
         })
         .catch((error) => {
+          this.load_text = 'Произошла ошибка при загрузке данных';
           this.load_error = error;
           console.log(error);
         });
@@ -104,7 +105,7 @@ form{
 }
 .green_button{
   background-color: rgba(0, 145, 145, 0.774);
-  margin: 1vh 1vw 0 1vw;
+  margin: auto;
   padding: 1vh 1vw;
   font-size: 100%;
   text-decoration: none;

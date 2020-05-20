@@ -66,7 +66,7 @@ export default {
 }
 .content{
   display: block;
-  min-height: calc(100vh - 10vh - 5vh);
+  min-height: calc(100vh - 10vh - 4vh);
 }
 .green_button{
   background-color: rgba(0, 150, 150);

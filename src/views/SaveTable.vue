@@ -1,45 +1,48 @@
 <template>
-  <div class="save_table content">
-    <div class="head">
-      <div class="left">
-        {{this.$store.state.n.selectSubject}}
+  <div class="content">
+    <div class="save_table">
+      <div class="head">
+        <div class="left">
+          {{this.$store.state.n.selectSubject}}
+        </div>
+        <div class="left">
+          {{this.$store.state.n.selectDate}}
+        </div>
+        <div class="left">
+          Группы:
+          <transition-group name="list" tag="span">
+              <span
+              v-for="item in this.$store.state.n.groups"
+              v-bind:key="item.num" class="list-item">
+              {{item.num}}
+              </span>
+            </transition-group>
+        </div>
+        <div>
+          <router-link to="/" id="exit_home" class="green_button">Сохранить</router-link>
+        </div>
       </div>
-      <div class="left">
-        {{this.$store.state.n.selectDate}}
-      </div>
-      <div class="left">
-        Группы:
-        <transition-group name="list" tag="span">
-            <span
-            v-for="item in this.$store.state.n.groups"
-            v-bind:key="item.title" class="list-item">
-            {{item.title}}
-            </span>
-          </transition-group>
-      </div>
-      <div>
-        <router-link to="/" id="exit_home" class="green_button">Сохранить</router-link>
-      </div>
+      <div style="clear: both;"></div>
+      <table>
+          <thead>
+            <tr>
+              <td class="fio fix_y">ФИО</td>
+              <td class="fix_y">&#177;</td>
+              <td class="fix_y">Заметки</td>
+            </tr>
+          </thead>
+          <tbody v-for="group in this.$store.state.n.groups_imp" v-bind:key="group.num">
+            <td colspan="3" class="group_name">{{group.num}}</td>
+            <tr v-for="stud in group.student" v-bind:key="stud.id">
+              <td class="grey">{{edit_name(stud.name)}}</td>
+              <td>+</td>
+              <td class="grey full">
+                <input type="text" class="zam">
+              </td>
+            </tr>
+          </tbody>
+      </table>
     </div>
-    <div style="clear: both;"></div>
-    <table>
-        <thead>
-          <tr>
-            <td class="fio fix_y">ФИО</td>
-            <td class="fix_y">&#177;</td>
-            <td class="fix_y">Заметки</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in students" v-bind:key="item.id">
-            <td class="grey">{{item.student[0]}}</td>
-            <td>+</td>
-            <td class="grey full">
-              <input type="text" class="zam">
-            </td>
-          </tr>
-        </tbody>
-    </table>
   </div>
 </template>
 
@@ -47,57 +50,20 @@
 export default {
   data() {
     return {
-      title: ['ФИО', 'Группа'],
-      students: [
-        { student: ['Студентик'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студеняка'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студентищееееееееее ееееееееееееееееее'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студенёк'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студентъ'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-        { student: ['Студень'] },
-        { student: ['Студент'] },
-        { student: ['Студент'] },
-      ],
-      data: ['20.03.2020',
-        '25.03.20',
-        '31.03.20',
-        '10.04.20',
-        '16.04.20',
-        '22.04.20',
-        '12.05.20',
-        '21.05.20',
-        '01.06.20',
-        '23.06.20',
-        '23.06.20',
-        '23.06.20',
-        '23.06.20',
-        '23.06.20',
-        '23.06.20',
-        '23.06.20',
-      ],
     };
+  },
+  methods: {
+    edit_name(name) {
+      return name.split(' ', 2).join(' ');
+    },
   },
 };
 </script>
 
 <style lang="scss">
+.group_name{
+  background-color: rgba(128, 128, 128, 0.171);
+}
 td.fio{
   z-index:9999;
   text-align: center;
@@ -118,12 +84,12 @@ td{
   border: 1px solid rgb(0, 0, 0);
 }
 table{
+  max-height: 74vh;
   display: block;
   color: black;
   border-collapse: collapse;
   margin: 0 auto 0 auto;
   overflow: auto;
-  height: 77vh;
 }
 .full{
   width: 100%;

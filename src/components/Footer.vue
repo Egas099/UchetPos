@@ -16,12 +16,12 @@ export default {
 
 <style scoped lang="scss">
 footer{
-  height: 5vh;
-  min-height: 30px;
+  height: 4vh;
+  min-height: 20px;
   background-color: rgb(150, 150, 150);
   color: rgba(255, 255, 255, 0.781);
 }
 .copyright{
-  margin: 1vh;
+  padding: .5vh;
 }
 </style>
