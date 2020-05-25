@@ -25,17 +25,19 @@ const Autorization = {
 const DataForNewTable = {
   state: () => ({
     groups: [
-      {
-        num: '22304',
-      },
     ],
     groups_imp: [],
-    selectSubject: 'Web',
-    selectDate: '2020-05-01',
+    selectSubject: '',
+    selectDate: '',
+    lesson_id: '',
   }),
   mutations: {
     remote_group(state, index) {
       state.groups.splice(index, 1);
+    },
+    change_less_id(state, id) {
+      state.lesson_id = id;
+      console.log(state.lesson_id);
     },
     new_group(state, newGroup) {
       let checkDup = false;
@@ -55,19 +57,15 @@ const DataForNewTable = {
       state.selectSubject = payload.selSub;
     },
     add_groups(state, groups) {
-      console.log(groups);
-      console.log(groups.length);
       if (groups.length > 0) {
         groups.forEach((group) => {
           state.groups_imp.push(group);
         });
-        console.log(state.groups_imp);
-        console.log(groups);
       } else {
         state.groups_imp.push(groups);
         // state.groups_imp = groups;
       }
-      console.log(state.groups_imp);
+      // console.log(state.groups_imp);
     },
     clear_groups(state) {
       state.groups_imp = [];
@@ -121,13 +119,10 @@ const DataForCheckTable = {
 
 export default new Vuex.Store({ // Основной store
   state: {
-    count: 5,
     subjects: [],
+    server_url: '',
   },
   mutations: {
-    increment(state) {
-      state.count += 1;
-    },
     subjects_fill(state, response) {
       state.subjects = response.data;
     },

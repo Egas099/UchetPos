@@ -1,24 +1,22 @@
 <template>
   <div id="app">
     <Header/>
-    <!-- <transition-group name="view" tag="div"> -->
     <router-view v-if="this.$store.state.a.autoriz"/>
     <Authorization v-else/>
-    <!-- </transition-group> -->
-    <Footer/>
+    <!-- <Footer/> -->
   </div>
 </template>
 
 <script>
 import Authorization from '@/components/Authorization.vue';
 import Header from '@/components/Header.vue';
-import Footer from '@/components/Footer.vue';
+// import Footer from '@/components/Footer.vue';
 // import axios from 'axios';
 
 export default {
   components: {
     Header,
-    Footer,
+    // Footer,
     Authorization,
   },
   mounted() {
@@ -62,17 +60,18 @@ export default {
   flex-direction: column;
   min-height: 100%;
   background: rgb(196, 196, 196);
-
+  transition: all 0.3s;
 }
-.content{
+.content_wrapper{
   display: block;
-  min-height: calc(100vh - 10vh - 4vh);
+  min-height: calc(100vh - 10vh);
+  // max-width: 100vw;
 }
 .green_button{
   background-color: rgba(0, 150, 150);
   &:hover {
   background-color: rgb(0, 170, 170);
-  transition: 0.3s;
+  transition: .3s;
   }
   text-decoration: none;
   border: none;

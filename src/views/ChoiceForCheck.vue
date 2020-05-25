@@ -1,5 +1,5 @@
 <template>
-  <div class="choiceforcheck content">
+  <div class="choiceforcheck content_wrapper">
     <form @submit.prevent="view_attendance">
       <fieldset>
         <input type="list" class="inp" list="pred"  placeholder="Выберите предмет" required

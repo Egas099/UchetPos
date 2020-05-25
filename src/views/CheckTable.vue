@@ -1,6 +1,6 @@
 <template>
-  <div class="content">
-    <div class="content_wrapper">
+  <div class="content_wrapper">
+    <div class="content">
       <div class="head">
         <p class="">
           {{this.$store.state.c.selectSubject}}
@@ -105,6 +105,9 @@ td{
   overflow: auto;
   max-height: 75vh;
   max-width: 94vw;
+  @media screen and (min-height: 700px) {
+    height: 72.5vh;
+  }
 }
 .fix_y{
   position: sticky;
@@ -114,7 +117,7 @@ td{
   position: sticky;
   left: 0;
 }
-.content_wrapper{
+.content{
   display: inline-block;
   max-width: 95%;
   margin: 0 auto;

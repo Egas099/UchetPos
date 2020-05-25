@@ -1,12 +1,9 @@
 <template>
-  <div class="home content">
-    <div class="view_attendance">
-      <router-link to="/selectionnew">Отметить посещаемость</router-link>
-    </div>
-    <div class="view_attendance">
+  <div class="content_wrapper">
+    <div class="home">
+      <router-link to="/selectionnew" class="">Отметить посещаемость</router-link>
       <router-link to="/selectioncheck">Просмотр посещаемости</router-link>
     </div>
-    <div class="">{{this.$store.state.a.counter}}</div>
   </div>
 </template>
 
@@ -20,15 +17,27 @@ export default {
 
 </script>
 <style scoped lang="scss">
-.view_attendance > *{
+.home > *{
+  transition: all 0.3s;
   background-color: rgba(128, 128, 128, 0.637);
-  display: block;
+  border: 1vh rgb(0, 145, 145) solid;
   text-decoration: none;
   color: black;
-  border: 5px rgb(0, 145, 145) solid;
-  margin: 20vh auto;
   width: 30%;
   min-width: 200px;
   padding: 3vh 0;
+  &:hover {
+    background-color: rgba(194, 194, 194, 0.589);
+    border: 1vh rgb(0, 170, 170) solid;
+    width: 31%;
+    font-size: 110%;
+  }
+}
+.home{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 65vh;
 }
 </style>

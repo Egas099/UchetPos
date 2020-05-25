@@ -1,7 +1,7 @@
 module.exports = {
   pwa: {
-    name: 'UchetPos'
+    name: 'UchetPos',
   },
   outputDir: 'UchetPosSite',
   publicPath: './',
-}
+};

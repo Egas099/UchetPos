@@ -2,11 +2,10 @@
   <header>
     <div class="" v-if="this.$store.state.a.autoriz">
       <div class="auth_name">
-        <input type="button" value="Иванов Иван Иванович" class="green_button">
+        <button class="green_button">Иванов Иван Иванович</button>
       </div>
       <div class="exit">
-        <input type="button" value="Выход" class="green_button"
-        @click="Deauthorization">
+        <button @click="Deauthorization" class="green_button">Выход</button>
       </div>
       <div style="clear: both;"></div>
     </div>
@@ -32,12 +31,14 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 header{
+  transition: all 0.3s;
   background: rgba(0, 150, 150);
   margin: 0 0 1vh 0;
   height: 9vh;
   min-height: 30px;
 }
-input{
+header button{
+  transition: all 0.3s;
   font-size: 120%;
   height: 9vh;
   min-height: 30px;
