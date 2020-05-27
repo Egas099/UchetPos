@@ -81,9 +81,14 @@ export default {
 
 <style scoped lang="scss">
 fieldset{
+  margin: 0 auto;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   border: 5px rgba(0, 145, 145, 0.774) solid;
   background-color: rgb(150, 150, 150);
-  display: inline-flex;
   padding: 5vh 1vh;
   @media screen and (max-width: 640px) {
     width: calc(100vw - 50px);

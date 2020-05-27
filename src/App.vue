@@ -8,8 +8,10 @@
 </template>
 
 <script>
+/* eslint-disable */
 import Authorization from '@/components/Authorization.vue';
 import Header from '@/components/Header.vue';
+import axios from 'axios';
 // import Footer from '@/components/Footer.vue';
 // import axios from 'axios';
 
@@ -20,27 +22,21 @@ export default {
     Authorization,
   },
   mounted() {
-    if (localStorage.autoriz === 'true') {
-      this.$store.commit('autorization');
-    }
     this.$store.dispatch('subjects_request');
-    // axios.get('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/group/22305')
-    //   .then((response) => {
-    //     console.log(response.data.student);
-    //   })
-    //   .catch((error) => console.log(error));
   },
-  // created() {
-  //   // axios.get(`http://localhost/basic/web/predmet/visits/`+group+`/`+predmet)
-  //   // .then(response => (this.lesson = response.data))
-  //   axios.get('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/group/22305')
-  //     .then((response) => {
-  //       console.log(response);
-  //       this.info = response;
-  //     })
-  //     .catch((error) => console.log(error));
-  // },
+  created() {
+    axios.get('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/site/tekuser')
+      .then((response) => {
+        if (response.data.group != null) {
+          this.$store.commit('autorization',{name:response.data.name,group: response.data.group});
+        }
+      })
+      .catch((response) => {
+        console.log(response);
+      });
+  },
 };
+
 </script>
 
 <style lang="scss">
@@ -76,5 +72,17 @@ export default {
   text-decoration: none;
   border: none;
   color: black;
+}
+.list-enter-active, .list-leave-active {
+  transition: opacity .2s;
+}
+.list-enter, .list-leave-to {
+  opacity: 0;
+}
+.list-item {
+  background-color: rgb(196, 196, 196);
+  display: inline-block;
+  padding: 0.5vh 0.5vw;
+  margin: 1px;
 }
 </style>

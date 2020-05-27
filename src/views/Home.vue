@@ -1,17 +1,22 @@
 <template>
   <div class="content_wrapper">
     <div class="home">
-      <router-link to="/selectionnew" class="">Отметить посещаемость</router-link>
+      <router-link to="/selectionnew" v-if="prava">
+      Отметить посещаемость
+      </router-link>
       <router-link to="/selectioncheck">Просмотр посещаемости</router-link>
     </div>
   </div>
 </template>
 
 <script>
-
+/* eslint-disable */
 export default {
   name: 'Home',
-  components: {
+  data() {
+    return {
+      prava: this.$store.state.a.prepod,
+    }
   },
 };
 
@@ -32,6 +37,12 @@ export default {
     width: 31%;
     font-size: 110%;
   }
+}
+.forPrep{
+  display: none;
+}
+.forStud{
+  display: block;
 }
 .home{
   display: flex;

@@ -2,7 +2,7 @@
   <header>
     <div class="" v-if="this.$store.state.a.autoriz">
       <div class="auth_name">
-        <button class="green_button">Иванов Иван Иванович</button>
+        <button class="green_button">{{$store.state.a.user_name}}</button>
       </div>
       <div class="exit">
         <button @click="Deauthorization" class="green_button">Выход</button>
@@ -16,13 +16,22 @@
 </template>
 
 <script>
+/* eslint-disable */
+import axios from 'axios';
 export default {
   name: 'Header',
   props: {
   },
   methods: {
     Deauthorization() {
-      this.$store.commit('deautorization');
+      
+ axios.post('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/site/logout')
+        .then((response) => {
+        //  this.resp = response.data;
+          console.log(this.resp);
+          this.$store.commit('deautorization');
+        })
+      
     },
   },
 };

@@ -26,15 +26,52 @@
             <tbody>
               <tr v-for="stud in loc_stud" v-bind:key="stud.id">
                 <td class="name fix_x">
-                {{edit_name(stud.name)}}
+                  <button class="but_name" @click="itogi(stud.id, stud.name)">
+                    {{edit_name(stud.name)}}</button>
                 </td>
                 <td v-for="item in loc_visit" v-bind:key="item.data"
                   :class="find_pos(stud.id,item.lesson.visit) ? 'b_green' : 'b_red'">
+                  <!-- {{find_itog(stud.id,item.lesson.visit)}} -->
                 </td>
               </tr>
             </tbody>
         </table>
       </div>
+      <!-- <div class="itog_table">
+        <table id="main_table">
+            <thead>
+              <tr>
+                <td class="fio fix_x fix_y">Студент</td>
+                <td v-for="item in loc_visit" v-bind:key="item.data" class="fix_y">
+                  {{item.lesson.data}}
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name fix_x">
+                  {{stud_name}}
+                </td>
+                <td v-for="item in loc_visit" v-bind:key="item.data">
+                  {{find_itog(stud.id,item.lesson.visit)}}
+                </td>
+              </tr>
+            </tbody>
+        </table>
+        <div class="">
+          {{stud_name}}
+        </div>
+          <div class="line_x">
+            <div v-for="item in loc_visit" v-bind:key="item.data" class="ic">
+              {{item.lesson.data}}
+            </div>
+          </div>
+          <div class="line_x">
+            <div v-for="item in loc_visit" v-bind:key="item.data" class="ic">
+              {{find_itog(stud_id,item.lesson.visit)  }}
+            </div>
+          </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -43,11 +80,18 @@
 export default {
   data() {
     return {
+      stud_name: '',
+      stud_id: '',
       loc_visit: this.$store.state.c.visits,
       loc_stud: this.$store.state.c.students,
     };
   },
   methods: {
+    itogi(id, name) {
+      this.stud_id = id;
+      this.stud_name = name;
+      console.log(id);
+    },
     edit_name(name) {
       return name.split(' ', 2).join(' ');
     },
@@ -64,13 +108,51 @@ export default {
       }
       return pos;
     },
-    view() {
+    find_itog(id, visit) {
+      let itog = '';
+      try {
+        visit.forEach((element) => {
+          if (element.stud_id === id) {
+            itog = element.itog;
+          }
+        });
+      } catch {
+        itog = '';
+      }
+      return itog;
     },
   },
 };
 </script>
 
 <style lang="scss">
+.itog_table{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  border: 5px rgb(0, 145, 145) solid;
+  background-color: rgb(196, 196, 196);
+}
+.line_x{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ic{
+  padding: 1vh 1vw;
+  height: 10vh;
+  border: 1px rgb(0, 0, 0) solid;
+}
+.but_name{
+  width: 100%;
+  height: 100%;
+  background-color: rgb(196, 196, 196);
+  border: none;
+  padding: 1vh 1vw;
+  font-size: initial;
+}
 .table_wrapper{
   display: inline-block;
   margin: 0 auto;
@@ -84,6 +166,7 @@ td.name{
   background: rgb(196, 196, 196);
   min-width: 16vw;
   text-align: left;
+  padding: 0;
 }
 thead td{
   background: rgba(0, 150, 150);

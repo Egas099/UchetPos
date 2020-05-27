@@ -1,7 +1,7 @@
 <template>
   <div class="choicefornew content_wrapper">
     <form @submit.prevent="save_attendance">
-      <fieldset class="main_fieldset">
+      <fieldset id="main_fieldset">
         <div class="head">
           <span>Группы:</span>
           <input type="button" value="Добавить" class="green_button"
@@ -80,6 +80,12 @@ export default {
       studsInLess: [],
     };
   },
+  mounted() {
+    if (!this.$store.state.a.prepod) {
+      this.$router.push('/');
+    }
+  },
+
   methods: {
     created_less() {
       // let obj = new Object();
@@ -170,13 +176,19 @@ export default {
 .choicefornew  fieldset{
   border: 5px rgba(0, 145, 145, 0.774) solid;
   text-align: start;
-  display: inline-flex;
   background-color: rgb(150, 150, 150);
   padding: 1vh 1vw 1vh 1vw;
   transition: all 0.3s;
   // min-width: 400px;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  // justify-content: space-around;
 }
-.main_fieldset{
+#main_fieldset{
+  margin: 15vh auto;
   width: 30%;
   margin: 10vh auto;
   @media screen and (max-width: 640px) {
@@ -220,18 +232,7 @@ export default {
   font-size: 150%;
   border: none;
 }
-.list-enter-active, .list-leave-active {
-  transition: opacity .2s;
-}
-.list-enter, .list-leave-to {
-  opacity: 0;
-}
-.list-item {
-  background-color: rgb(196, 196, 196);
-  display: inline-block;
-  padding: 0.5vh 0.5vw;
-  margin: 1px;
-}
+
 .choicefornew p{
   margin: 0;
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="content_wrapper">
     <div class="authorization">
-      <form v-on:submit.prevent="Authorization">
+      <form>
         <fieldset>
           <div>
             <input class="inp" type="text" placeholder="Логин" v-model="login">
@@ -9,20 +9,33 @@
           <div>
             <input class="inp" type="password" placeholder="Пароль" v-model="password">
           </div>
-          <div>
+          <!-- <div>
             <input class="inp" placeholder="Url" v-model="use_url">
+          </div> -->
+          <div>
+            <input type="button" value="Не помню пароль" @click="show_window = !show_window">
           </div>
           <div>
-            <input type="button" value="Не помню пароль">
-          </div>
-          <div>
-            <input type="submit" class="green_button" value="Войти без авторизации">
+            <button @click.prevent="Authorization" class="green_button">
+              Войти без авторизации</button>
           </div>
           <button @click.prevent="server_author" class="green_button but">
+            Авторизироваться</button>
+            <!-- <button @click.prevent="tester">
             Отправить введённые данные на сервер</button>
+            <button @click.prevent="exit">
+            выйти</button> -->
         </fieldset>
       </form>
-      <div class="">{{resp}}</div>
+      <transition name="list">
+        <div class="donotrem" v-show="show_window">
+          <div>
+            <div>По поводу пароля обращайтесь в директцию вашего института</div>
+            <button class="green_button but" @click="show_window = !show_window">Продолжить</button>
+          </div>
+        </div>
+      </transition>
+      <!-- <div class="">{{resp}}</div> -->
     </div>
   </div>
 </template>
@@ -35,15 +48,36 @@ export default {
   name: 'Authorization',
   data() {
     return {
-      login: 'login',
-      password: 'password',
-      use_url: 'http://kappa.cs.petrsu.ru/~pogudin/tppo/web/site/login',
+      show_window: false,
+      login: '',
+      password: '',
+      // use_url: 'http://localhost/tppoq/web/site/login',
       resp: '-',
     };
   },
   methods: {
+    tester() {
+axios.get('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/site/tekuser')
+      .then((response) => {
+        console.log(response.data);
+        console.log(response.data.name);
+        console.log(response.data);
+      })
+    },
     Authorization() {
-      this.$store.commit('autorization');
+      // console.log('eqweqweqw')
+      this.$store.commit('face_auth');
+    },
+    exit() {
+ axios.post('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/site/logout')
+        .then((response) => {
+        //  this.resp = response.data;
+          console.log(this.resp);
+        //  if(response.data.groups != null)
+        //  {
+        //    this.$store.commit('autorization');
+        //  }
+        })
     },
     server_author() {
       let data = [];
@@ -53,32 +87,56 @@ export default {
         password: this.password,
       };
       data = JSON.stringify(data);
-      obj.push(data);
-      obj = JSON.stringify(obj);
+     // obj.push(data);
+     // obj = JSON.stringify(obj);
       // obj = JSON.stringify(obj);
       // console.log(obj);
-      console.log(obj);
-      axios.post('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/site/test2', obj)
+     // console.log(obj);
+      axios.post('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/site/login', data)
         .then((response) => {
-          this.resp = response;
-          console.log(response);
+          this.resp = response.data;
+         // console.log(this.resp);
+          if(response.data.group != null)
+          {
+            this.$store.commit('autorization',{name:this.resp.name,group:this.resp.group});
+          }
         })
-        .catch((error) => {
-          this.resp = error;
-          console.log(error);
-        });
+        .catch((response) =>{
+          
+          // this.$store.commit('autorization',{name:'test',group:'22304'});
+          //alert(this.$store.state.a.tekgroup)
+          console.log(response);
+          //alert(response);
+          //this.$store.commit('autorization','loh');
+        //  alert(this.$store.state.a.user_name)
+        })
+        
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
+.donotrem{
+  position: fixed;
+  top: 30vh;
+  left:0;
+  right:0;
+}
+.donotrem > div{
+  // display: block;
+  padding: 3vh 3vw;
+  width: 40%;
+  border: 5px rgba(0, 145, 145, 0.774) solid;
+  background-color: rgb(150, 150, 150);
+  margin: 0 auto;
+}
 fieldset{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 5px rgba(145, 0, 0, 0.774) solid;
+  border: 5px rgba(0, 145, 145, 0.774) solid;
   background-color: rgb(150, 150, 150);
 }
 form{
@@ -106,6 +164,7 @@ form{
 .but{
   margin: 1vh auto;
   padding: 1vh 1vw;
+  font-size: 120%;
 }
 .authorization{
   display: flex;

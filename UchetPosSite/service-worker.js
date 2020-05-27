@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.3507d0fd77afbdf1e1d70c11d539c8be.js"
+  "precache-manifest.b31606d5fe4e4f63d63a0a10737efbff.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "uchetpos"});

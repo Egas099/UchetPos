@@ -7,15 +7,28 @@ Vue.use(Vuex);
 const Autorization = {
   state: () => ({
     autoriz: false,
+    user_name: '',
+    prepod: false,
   }),
   mutations: {
-    autorization(state) {
+    autorization(state, data) {
+      if (data.group === '22304' || data.group === 'faculty' || data.group === 'visitors' || data.groupp === 'staff') {
+        state.prepod = true;
+      }
+      state.user_name = `${data.name}${state.prepod ? '(Права преподавателя)' : '(Права студента)'}`;
       state.autoriz = true;
-      localStorage.autoriz = true;
+      // localStorage.autoriz = true;
+    },
+    face_auth(state) {
+      state.user_name = 'Test(Права преподавателя)';
+      state.prepod = true;
+      state.autoriz = true;
     },
     deautorization(state) {
+      state.user_name = '';
+      state.prepod = false;
       state.autoriz = false;
-      localStorage.autoriz = false;
+      // localStorage.autoriz = false;
     },
   },
   actions: {},
@@ -37,7 +50,7 @@ const DataForNewTable = {
     },
     change_less_id(state, id) {
       state.lesson_id = id;
-      console.log(state.lesson_id);
+      // console.log(state.lesson_id);
     },
     new_group(state, newGroup) {
       let checkDup = false;
@@ -84,14 +97,6 @@ const DataForCheckTable = {
     selectGroup: '',
   }),
   mutations: {
-    none() {
-      console.log('Вызван');
-      axios.get('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/')
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => console.log(error));
-    },
     import_visits(state, visits) {
       state.visits = visits;
       // state.visits.sort(visits.lesson.data);

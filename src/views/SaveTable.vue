@@ -47,6 +47,23 @@
           </tbody>
       </table>
     </div>
+    <div class="loading" v-if="load">
+      <div class="load_data" >Сохраняем данные...</div>
+      <div class="load_error">
+        <div class="load_data" v-show="load_error || load_text">
+          <div>
+            {{load_text}}<br>{{load_error}}<br>
+          </div>
+        <button @click="() => {
+          this.load = false;
+          this.load_error = '';
+          this.load_text = '';
+          }"
+          class="green_button">Продолжить
+        </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,6 +74,9 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      load: false,
+      load_text: '',
+      load_error: '',
       lessons: [],
       lesson_id: 0,
     };
@@ -66,6 +86,7 @@ export default {
       return name.split(' ', 2).join(' ');
     },
     send_attendance() {
+      this.load = true;
       let visits = [];
       this.lessons.forEach((lesson) => {
         lesson.students.forEach((vis) => {
@@ -75,11 +96,20 @@ export default {
       let obj = [visits];
       // console.log(obj);
       axios.post('http://kappa.cs.petrsu.ru/~pogudin/tppo/web/visit/add', obj)
-        .then((response) => (this.$router.push('/')))
-        .catch((error) => (console.log(error)));
+        .then((response) => {
+          this.load_text = 'Успешно';
+          this.$router.push('/');
+        })
+        .catch((error) => {
+          this.load_error += error;
+          this.load_text = 'Ошибка при создании занятия';
+        });
     },
   },
   created() {
+    if (!this.$store.state.a.prepod) {
+      this.$router.push('/');
+    }
     // console.log(response.data.id);
     this.$store.state.n.groups_imp.forEach((group) => {
       const lesson = {
@@ -98,7 +128,7 @@ export default {
       });
       this.lessons.push(lesson);
     });
-    console.log(this.lessons);
+    // console.log(this.lessons);
     if (this.$store.state.n.groups_imp.length === 0) {
       this.$router.push('/selectionnew');
     }
